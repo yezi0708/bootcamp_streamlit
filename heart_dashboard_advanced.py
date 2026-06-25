@@ -14,8 +14,8 @@ warnings.filterwarnings('ignore')
 # ========== 데이터 로드 ==========
 @st.cache_data
 def load_data():
-    df1 = pd.read_csv(r"D:\bootcamp\bootcamp_train\heart.csv")
-    df2 = pd.read_csv(r"D:\bootcamp\bootcamp_train\heart_failure.csv")
+    df1 = pd.read_csv("heart.csv")
+    df2 = pd.read_csv("heart_failure.csv")
     return df1, df2
 
 df1, df2 = load_data()
