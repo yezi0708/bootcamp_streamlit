@@ -113,12 +113,32 @@ if selected_page == "나의 상태를 파악해요!":
             )
         
         with col2:
-            st.session_state.user_age = st.slider(
-                "🎂 나이",
-                min_value=20, max_value=100,
-                value=st.session_state.user_age
+            anaemia = st.checkbox("🩸 빈혈이 있으신가요?")
+            
+            st.markdown("### 📏 신체 정보")
+            
+            body_weight = st.number_input(
+                "체중 (kg)",
+                min_value=30.0, max_value=200.0,
+                value=70.0,
+                step=0.5
             )
-        
+            
+            height = st.number_input(
+                "키 (cm)",
+                min_value=100, max_value=250,
+                value=170,
+                step=1
+            )
+            
+            # BMI 자동 계산
+            bmi = body_weight / ((height/100) ** 2)
+            st.metric("BMI", f"{bmi:.1f}")
+            
+            # 기본값
+            serum_sodium = 130
+            ejection_fraction = 40
+                
         with col3:
             gender = st.selectbox("👨👩 성별", ["남성", "여성"])
         
@@ -184,7 +204,10 @@ if selected_page == "나의 상태를 파악해요!":
                     'diabetes': diabetes,
                     'smoking': smoking,
                     'serum_sodium': serum_sodium,
-                    'ejection_fraction': ejection_fraction
+                    'ejection_fraction': ejection_fraction,
+                    'body_weight': body_weight,  # ← 추가
+                    'height': height,            # ← 추가
+                    'bmi': bmi                   # ← 추가
                 }
                 
                 st.success(f"✅ {st.session_state.user_name}님의 데이터가 저장되었습니다!")
@@ -247,7 +270,7 @@ if selected_page == "나의 상태를 파악해요!":
             }
             
             fig_pie = go.Figure(data=[go.Pie(
-                labels=risk_factors.keys(),
+                labels=list(risk_factors.keys()),
                 values=[v*100 for v in risk_factors.values()],
                 hole=0.3,
                 marker=dict(colors=['#FF6B6B', '#FFA500', '#FFD93D', '#6BCB77', '#4D96FF'])
@@ -274,9 +297,9 @@ if selected_page == "나의 상태를 파악해요!":
             with col2:
                 st.metric("🎂 나이", f"{st.session_state.user_data.get('age', 0)}세")
             with col3:
-                st.metric("💓 박출률", f"{st.session_state.user_data.get('ejection_fraction', 0)}%")
+                st.metric("⚖️ 체중", f"{st.session_state.user_data.get('body_weight', 0):.1f}kg")
             with col4:
-                st.metric("🧂 혈청나트륨", f"{st.session_state.user_data.get('serum_sodium', 0)} mEq/L")
+                st.metric("📏 BMI", f"{st.session_state.user_data.get('bmi', 0):.1f}")
             
             st.divider()
             
