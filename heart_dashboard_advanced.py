@@ -103,43 +103,38 @@ if selected_page == "나의 상태를 파악해요!":
         st.markdown("### 📋 개인 정보 및 증상 입력")
         
         # 개인 정보 입력
-        col1, col2, col3 = st.columns(3)
-        
+        col1, col2 = st.columns(2)
+
         with col1:
+            st.markdown("### 👤 개인 정보")
             st.session_state.user_name = st.text_input(
-                "👤 이름",
+                "이름",
                 value=st.session_state.user_name,
                 placeholder="이름을 입력하세요"
             )
-        
+            gender = st.selectbox("성별", ["남성", "여성"])
+
         with col2:
-            
             st.markdown("### 📏 신체 정보")
-            
             body_weight = st.number_input(
                 "체중 (kg)",
                 min_value=30.0, max_value=200.0,
                 value=70.0,
                 step=0.5
             )
-            
             height = st.number_input(
-                "키 (cm)",
-                min_value=100, max_value=250,
-                value=170,
-                step=1
-            )
-            
-            # BMI 자동 계산
-            bmi = body_weight / ((height/100) ** 2)
-            st.metric("BMI", f"{bmi:.1f}")
-            
-            # 기본값
-            serum_sodium = 130
-            ejection_fraction = 40
-                
-        with col3:
-            gender = st.selectbox("👨👩 성별", ["남성", "여성"])
+            "키 (cm)",
+            min_value=100, max_value=250,
+            value=170,
+            step=1
+        )
+        bmi = body_weight / ((height/100) ** 2)
+        st.metric("BMI", f"{bmi:.1f}")
+
+        # 기본값 설정
+        serum_sodium = 130
+        ejection_fraction = 40
+
         
         st.markdown("---")
         
@@ -149,26 +144,38 @@ if selected_page == "나의 상태를 파악해요!":
         col1, col2 = st.columns(2)
         
         with col1:
+            st.markdown("### 🩺 증상/질환")
             chest_pain = st.checkbox("💔 흉통이 있으신가요?", key="chest_pain")
             high_bp = st.checkbox("⬆️ 고혈압이 있으신가요?", key="high_bp")
             diabetes = st.checkbox("🩸 당뇨병이 있으신가요?", key="diabetes")
             smoking = st.checkbox("🚬 흡연 경험이 있으신가요?", key="smoking")
+            anaemia = st.checkbox("🩸 빈혈이 있으신가요?", key="anaemia_check")
         
         with col2:
-            anaemia = st.checkbox("🩸 빈혈이 있으신가요?", key="anaemia_check")
-            
+        st.markdown("### 📊 검사 수치")
+        
+        col_a, col_b = st.columns([3, 1])
+        with col_a:
             serum_sodium = st.slider(
-                "🧂 혈청 나트륨 (mEq/L)",
+                "혈청 나트륨 (mEq/L)",
                 min_value=100, max_value=150,
                 value=130
             )
-            
+        with col_b:
+            if st.button("❓", key="sodium_unknown"):
+                serum_sodium = 130
+        
+        col_c, col_d = st.columns([3, 1])
+        with col_c:
             ejection_fraction = st.slider(
-                "💓 박출률 (%)",
+                "박출률 (%)",
                 min_value=10, max_value=80,
                 value=40
             )
-        
+        with col_d:
+            if st.button("❓", key="ejection_unknown"):
+                ejection_fraction = 40
+                
         st.markdown("---")
         
         # 분석 버튼
