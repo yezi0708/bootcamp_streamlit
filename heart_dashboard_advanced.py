@@ -154,27 +154,27 @@ if selected_page == "나의 상태를 파악해요!":
         with col2:
             st.markdown("### 📊 검사 수치")
             
-            col_a, col_b = st.columns([3, 1])
-            with col_a:
-                serum_sodium = st.slider(
-                    "혈청 나트륨 (mEq/L)",
-                    min_value=100, max_value=150,
-                    value=130
-                )
-            with col_b:
-                if st.button("❓", key="sodium_unknown"):
-                    serum_sodium = 130
+            # 혈청 나트륨
+            sodium_unknown = st.checkbox("혈청 나트륨 모름", key="sodium_unknown")
+            serum_sodium = st.slider(
+                "🧂 혈청 나트륨 (mEq/L)",
+                min_value=100, max_value=150,
+                value=130,
+                disabled=sodium_unknown
+            )
+            if sodium_unknown:
+                serum_sodium = 130
             
-            col_c, col_d = st.columns([3, 1])
-            with col_c:
-                ejection_fraction = st.slider(
-                    "박출률 (%)",
-                    min_value=10, max_value=80,
-                    value=40
-                )
-            with col_d:
-                if st.button("❓", key="ejection_unknown"):
-                    ejection_fraction = 40
+            # 박출률
+            ejection_unknown = st.checkbox("박출률 모름", key="ejection_unknown")
+            ejection_fraction = st.slider(
+                "💓 박출률 (%)",
+                min_value=10, max_value=80,
+                value=40,
+                disabled=ejection_unknown
+            )
+            if ejection_unknown:
+                ejection_fraction = 40
                 
         st.markdown("---")
         
