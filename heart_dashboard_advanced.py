@@ -88,7 +88,7 @@ if selected_page == "나의 상태를 파악해요!":
     # 헤더 이미지
     col_logo, col_title = st.columns([1, 4])
     with col_logo:
-        st.image(r"D:\bootcamp\bootcamp_train\img.png", width=120)
+        st.image("img.png", width=120)
     with col_title:
         st.markdown("# 💓 심부전 위험도 분석")
         st.markdown("*당신의 심장 건강을 함께 지켜봅시다*")
@@ -397,7 +397,7 @@ if selected_page == "나의 상태를 파악해요!":
 
 # ========== 페이지2: 건강 정보 ==========
 else:
-    st.image(r"D:\bootcamp\bootcamp_train\img.png", width=120)
+    st.image("img.png", width=120)
     st.markdown("# 💚 건강 정보를 공유해요!")
     st.markdown("*심부전에 대한 정보와 예방법을 알아봅시다*")
     
