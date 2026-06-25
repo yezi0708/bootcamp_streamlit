@@ -113,7 +113,6 @@ if selected_page == "나의 상태를 파악해요!":
             )
         
         with col2:
-            anaemia = st.checkbox("🩸 빈혈이 있으신가요?")
             
             st.markdown("### 📏 신체 정보")
             
@@ -150,13 +149,13 @@ if selected_page == "나의 상태를 파악해요!":
         col1, col2 = st.columns(2)
         
         with col1:
-            chest_pain = st.checkbox("💔 흉통이 있으신가요?")
-            high_bp = st.checkbox("⬆️ 고혈압이 있으신가요?")
-            diabetes = st.checkbox("🩸 당뇨병이 있으신가요?")
-            smoking = st.checkbox("🚬 흡연 경험이 있으신가요?")
+            chest_pain = st.checkbox("💔 흉통이 있으신가요?", key="chest_pain")
+            high_bp = st.checkbox("⬆️ 고혈압이 있으신가요?", key="high_bp")
+            diabetes = st.checkbox("🩸 당뇨병이 있으신가요?", key="diabetes")
+            smoking = st.checkbox("🚬 흡연 경험이 있으신가요?", key="smoking")
         
         with col2:
-            anaemia = st.checkbox("🩸 빈혈이 있으신가요?")
+            anaemia = st.checkbox("🩸 빈혈이 있으신가요?", key="anaemia_check")
             
             serum_sodium = st.slider(
                 "🧂 혈청 나트륨 (mEq/L)",
